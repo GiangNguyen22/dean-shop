@@ -42,6 +42,9 @@ public class Product {
     @Column(nullable = false)
     private boolean isNewArrival;
 
+    @Column(nullable = false,unique = true)
+    private String slug;
+
     @Column(updatable = false)
     @Temporal(TemporalType.TIMESTAMP) //ánh xạ kiểu dữ liệu tương ứng sang csdl
     private Date createdAt;
