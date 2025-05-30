@@ -62,7 +62,7 @@ public class Product {
     private List<ProductVariant> variants;
 
     @ManyToOne
-    @JoinColumn(name = "categoryType_id", nullable = false)
+    @JoinColumn(name = "category_type_id", nullable = false)
     @JsonIgnore
     private CategoryType categoryType;
 

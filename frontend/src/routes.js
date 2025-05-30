@@ -3,36 +3,58 @@ import ProductListPage from "./pages/ProductListPage/ProductListPage";
 import ShopApplicationWrapper from "./pages/ShopApplicationWrapper";
 import App from "./App";
 import ProductDetails from "./pages/ProductDetailPage/ProductDetails";
-import {loadProductBySlug } from "./routes/product";
+import { loadProductBySlug } from "./routes/product";
+import AuthenticationWrapper from "./pages/AuthenticationWrapper";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import OAuth2Callback from "./pages/OAuth2Callback";
 
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <ShopApplicationWrapper/>,
-      children:[
-        {
-            path:"/",
-            element:<App/>
-        },
-        {
-            path: "/women",
-            element: <ProductListPage categoryType='WOMEN'/>,
-        },
-        {
-            path: "/men",
-            element: <ProductListPage categoryType='MEN'/>,
-        },
-        {
-            path: "/kids",
-            element: <ProductListPage categoryType='KIDS'/>,
-        },
-        {
-          path: "/product/:slug",
-          loader: loadProductBySlug,
-          element: <ProductDetails/>
-        }
-      ]
-    }
+  {
+    path: "/",
+    element: <ShopApplicationWrapper />,
+    children: [
+      {
+        path: "/",
+        element: <App />
+      },
+      {
+        path: "/women",
+        element: <ProductListPage categoryType='WOMEN' />,
+      },
+      {
+        path: "/men",
+        element: <ProductListPage categoryType='MEN' />,
+      },
+      {
+        path: "/kids",
+        element: <ProductListPage categoryType='KIDS' />,
+      },
+      {
+        path: "/product/:slug",
+        loader: loadProductBySlug,
+        element: <ProductDetails />
+      }
+    ]
+  },
+  {
+    path: "/v1/",
+    element: <AuthenticationWrapper />,
+    children: [
+      {
+        path: "login",
+        element: <Login />
+      },
+      {
+        path: "register",
+        element: <Register />
+      }
+    ]
+  },
 
-  ]);
-  
+  {
+    path: "/oauth2/callback",
+    element: <OAuth2Callback/>
+  }
+
+]);
