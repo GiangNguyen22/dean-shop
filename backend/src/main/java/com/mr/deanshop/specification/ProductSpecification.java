@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ProductSpecification {
     //tao dieu kien loc theo categoryId
     public static Specification<Product> hasCategoryId(UUID categoryId) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("category").get("id"), categoryId);
+        return ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("category").get("id"), categoryId));
     }
 
     public static Specification<Product> hasCategoryTypeId(UUID categoryTypeId) {

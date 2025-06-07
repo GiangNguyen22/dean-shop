@@ -1,11 +1,9 @@
 package com.mr.deanshop.auth.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mr.deanshop.entity.Address;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,13 +38,17 @@ public class User  implements UserDetails {
    private String verificationCode;
    private boolean enabled = false;
 
+   @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+   @ToString.Exclude
+   private List<Address> addressList;
+
    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH,CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
    @JoinTable(name = "AUTH_USER_AUTHORITY", joinColumns = @JoinColumn(referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(referencedColumnName = "id"))
    private List<Authority> authorities;
 
    @Override
    public Collection<? extends GrantedAuthority> getAuthorities() {
-      return List.of();
+      return authorities;
    }
 
    @PreUpdate

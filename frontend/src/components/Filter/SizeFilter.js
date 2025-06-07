@@ -1,11 +1,25 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
-const SizeFilter = ({sizes, hiddenTitle}) => {
+const SizeFilter = ({sizes, hiddenTitle, multi=true, onChange}) => {
     const [appliedSize, setAppliedSize] = useState([])
-    const onClickDiv = (item)=>{
-        setAppliedSize((prevSize) => prevSize.includes(item)? prevSize.filter(size => size!==item) : [...prevSize, item])
+    const onClickDiv =(item)=>{
+        if(appliedSize.indexOf(item) > -1){
+            setAppliedSize(pre => pre.filter(size => item !== size));
+        }else{
+            if(multi){
+                setAppliedSize([...appliedSize, item]);
+            }else{
+                setAppliedSize([item])
+            }
+        }
+        
         console.log(appliedSize)
     }
+
+    useEffect(() => {
+        onChange && onChange(appliedSize);
+    }, [appliedSize, onChange]);
+
   return (
     <div className='mb-4'>
         {!hiddenTitle && <p className='text-[16px] text-black mt-5 mb-5'>Size</p>}

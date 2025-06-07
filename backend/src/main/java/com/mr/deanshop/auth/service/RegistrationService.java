@@ -20,6 +20,8 @@ public class RegistrationService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthorityService authorityService;
 
 
     public RegistrationResponse createUser(RegistrationRequest request) {
@@ -39,8 +41,10 @@ public class RegistrationService {
             user.setPhone(request.getPhone());
             user.setEnabled(false);
             user.setPassword(passwordEncoder.encode(request.getPassword()));
+
             String code = VerificationCodeGenerator.generateCode();
             user.setVerificationCode(code);
+            user.setAuthorities(authorityService.getUserAuthority());
 
             emailService.sendEmail(user);
 

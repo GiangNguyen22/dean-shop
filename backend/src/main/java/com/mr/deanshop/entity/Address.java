@@ -3,18 +3,16 @@ package com.mr.deanshop.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mr.deanshop.auth.entity.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "address")
+@Table(name = "addresses")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Address {
     @Id
     @GeneratedValue
@@ -23,6 +21,7 @@ public class Address {
     private String name;
 
     private String street;
+    private String state;
     private String city;
     @Column(name = "zip_code")
     private String zipcode;

@@ -1,8 +1,6 @@
 package com.mr.deanshop.service;
 
 import com.mr.deanshop.dto.ProductDto;
-import com.mr.deanshop.dto.ProductResourceDto;
-import com.mr.deanshop.dto.ProductVariantDto;
 import com.mr.deanshop.entity.*;
 import com.mr.deanshop.exceptions.ResourceNotFoundEx;
 import com.mr.deanshop.mapper.ProductMapper;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -67,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
         productDto.setVariants(productMapper.mapProductVariantListDto(product.getVariants()));
         productDto.setProductResources(productMapper.mapProductResourceListDto(product.getResources()));
         return productDto;
+    }
+
+    @Override
+    public Product fetchProductById(UUID productId) {
+        return productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundEx("Product not found"));
     }
 
     @Override

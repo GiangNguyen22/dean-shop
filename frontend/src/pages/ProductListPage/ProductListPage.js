@@ -39,7 +39,7 @@ const ProductListPage = ({categoryType}) => {
     console.log(category);
 
     useEffect(()=>{
-        if (!category?.id) return; 
+
         dispatch(setLoading(true));
         getAllProducts(category?.id).then(res => {
             setProducts(res);

@@ -1,12 +1,13 @@
 import { API_BASE_URL } from "./constant"
 import axios from "axios";
 import { getHeaders } from "./constant";
+
 export const fetchUserDetail = async() => {
-    const url = API_BASE_URL + '/user/profile';
+    const url = API_BASE_URL + '/api/user/profile';
     try{
         const response = await axios (url, {
             method: "GET",
-            headers: getHeaders();
+            headers: getHeaders()
         })
         return response?.data;
     }

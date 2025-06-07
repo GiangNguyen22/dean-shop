@@ -8,6 +8,12 @@ import AuthenticationWrapper from "./pages/AuthenticationWrapper";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import OAuth2Callback from "./pages/OAuth2Callback";
+import Cart from "./pages/Cart/Cart";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Account from "./pages/Account/Account";
+import Checkout from "./pages/Checkout/Checkout";
+import ConfirmPayment from "./pages/ComfirmPayment/ComfirmPayment";
+import OrderConfirmed from "./pages/OrderComfirmed/OrderComfirmed";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +40,24 @@ export const router = createBrowserRouter([
         path: "/product/:slug",
         loader: loadProductBySlug,
         element: <ProductDetails />
-      }
+      },
+      {
+        path: "/cart-items",
+        element: <Cart/>
+      },
+      {
+        path: "/account-details",
+        element: <ProtectedRoute><Account/></ProtectedRoute>
+      }, 
+      {
+        path: "/checkout",
+        element: <ProtectedRoute><Checkout/></ProtectedRoute>
+      },
+       {
+          path:'/orderConfirmed',
+          element: <OrderConfirmed />
+         }
+    
     ]
   },
   {
@@ -55,6 +78,10 @@ export const router = createBrowserRouter([
   {
     path: "/oauth2/callback",
     element: <OAuth2Callback/>
-  }
+  },
+  {
+     path:'/confirmPayment',
+     element:<ConfirmPayment />
+    }
 
 ]);
