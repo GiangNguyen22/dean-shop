@@ -6,12 +6,10 @@ import com.mr.deanshop.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/address")
@@ -26,5 +24,17 @@ public class AddressController {
         Address address = addressService.createAddress(addressRequest, principal);
         return new ResponseEntity<>(address, HttpStatus.CREATED);
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Address> updateAddress(@RequestBody AddressRequest addressRequest, @PathVariable UUID id, Principal principal){
+        Address address = addressService.updateAddress(addressRequest,id,  principal);
+        return new ResponseEntity<>(address, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAddress(@PathVariable UUID id){
+        addressService.deleteAddress(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

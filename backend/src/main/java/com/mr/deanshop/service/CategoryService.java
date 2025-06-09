@@ -41,7 +41,7 @@ public class CategoryService {
                 .description(categoryDto.getDescription())
                 .build();
 
-        List<CategoryTypeDto> categoryTypeList = categoryDto.getCategoryTypeList();
+        List<CategoryTypeDto> categoryTypeList = categoryDto.getCategoryTypes();
         System.out.println(categoryTypeList);
 
         if(categoryTypeList != null) {
@@ -81,8 +81,8 @@ public class CategoryService {
         List<CategoryType> existing = category.getCategoryTypes();
         List<CategoryType> list = new ArrayList<>();
 
-        if(categoryDto.getCategoryTypeList() != null) {
-            categoryDto.getCategoryTypeList().forEach(categoryTypeDto -> {
+        if(categoryDto.getCategoryTypes() != null) {
+            categoryDto.getCategoryTypes().forEach(categoryTypeDto -> {
                 if(categoryTypeDto.getId() != null) {
                     Optional<CategoryType> categoryType = existing.stream().filter(t -> t.getId().equals(categoryTypeDto.getId())).findFirst();
                     if(categoryType.isPresent()) {

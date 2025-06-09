@@ -43,7 +43,7 @@ export default function Navigation({ variant = "default" }) {
                 {variant === "default" &&
                     <ul className="flex gap-8">
                         <li><button><Wishlist /></button></li>
-                        <li><button onClick={() => navigate("/account-details")}><AccountIcon /></button></li>
+                        <li><button onClick={() => navigate("/account-details/profile")}><AccountIcon /></button></li>
                         <li><Link to="/cart-items" className="flex flex-wrap"><CartIcon/>
                             {cartlength>0 && <div className='absolute ml-6 inline-flex items-center justify-center h-6 w-6 bg-black text-white rounded-full border-2 text-xs border-white'>{cartlength}</div>}
                             </Link>

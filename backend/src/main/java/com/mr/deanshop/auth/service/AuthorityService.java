@@ -21,6 +21,14 @@ public class AuthorityService {
 
     }
 
+    public Authority getAdminAuthority() {
+
+        return authorityRepository.findByRoleCode("ADMIN");
+    }
+
+
+
+
     public Authority createAuthority(String role, String description) {
         Authority authority = Authority.builder().roleCode(role).roleDescription(description).build();
         return authorityRepository.save(authority);

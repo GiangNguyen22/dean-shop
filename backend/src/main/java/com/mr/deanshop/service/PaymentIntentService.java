@@ -16,7 +16,7 @@ import java.util.Map;
 
 @Component
 public class PaymentIntentService {
-    
+
 
     public Map<String, String> createPaymentIntent(Order order) throws StripeException {
         User user = order.getUser();

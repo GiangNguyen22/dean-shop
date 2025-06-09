@@ -1,10 +1,7 @@
 package com.mr.deanshop.auth.controller;
 
 import com.mr.deanshop.auth.config.JWTTokenHelper;
-import com.mr.deanshop.auth.dto.LoginRequest;
-import com.mr.deanshop.auth.dto.RegistrationRequest;
-import com.mr.deanshop.auth.dto.RegistrationResponse;
-import com.mr.deanshop.auth.dto.UserToken;
+import com.mr.deanshop.auth.dto.*;
 import com.mr.deanshop.auth.entity.Authority;
 import com.mr.deanshop.auth.entity.User;
 import com.mr.deanshop.auth.service.AuthorityService;
@@ -19,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Map;
 
 @RestController
@@ -79,6 +77,7 @@ public class AuthController {
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
 
     @PostMapping("/role")
     public ResponseEntity<?> createRole(@RequestBody Authority authority){

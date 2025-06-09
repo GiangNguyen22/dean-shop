@@ -2,13 +2,12 @@ package com.mr.deanshop.auth.controller;
 
 import com.mr.deanshop.auth.dto.UserDetailDto;
 import com.mr.deanshop.auth.entity.User;
+import com.mr.deanshop.auth.service.RegistrationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -17,6 +16,8 @@ import java.security.Principal;
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserDetailController {
     private final UserDetailsService userDetailsService;
+    @Autowired
+    private RegistrationService registrationService;
 
     public UserDetailController(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -40,5 +41,11 @@ public class UserDetailController {
                 .build();
 
         return new ResponseEntity<>(userDetailDto, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public  ResponseEntity<?> updateRole(Principal principal){
+        registrationService.updateRole(principal.getName());
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 }

@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {AddressElement, CardElement, PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js';
+import { PaymentElement, useElements, useStripe} from '@stripe/react-stripe-js';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCartItems } from '../../store/features/cart';
 import { setLoading } from '../../store/features/common';

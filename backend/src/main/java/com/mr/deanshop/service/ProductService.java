@@ -17,4 +17,6 @@ public interface ProductService {
     ProductDto getProductBySlug(String slug);
 
     Product fetchProductById(UUID productId);
+
+    void deleteProduct(UUID id);
 }

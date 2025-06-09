@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto getProductById(UUID id) {
         Product product = productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundEx("Product not found"));
         ProductDto productDto = productMapper.mapToProductDto(product);
+        productDto.setId(product.getId());
         productDto.setCategoryId(product.getCategory().getId());
         productDto.setCategoryTypeId(product.getCategoryType().getId());
         productDto.setVariants(productMapper.mapProductVariantListDto(product.getVariants()));
@@ -69,6 +70,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product fetchProductById(UUID productId) {
         return productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundEx("Product not found"));
+    }
+
+    @Override
+    public void deleteProduct(UUID productId) {
+        Product product = productRepository.findById(productId).orElseThrow(()-> new ResourceNotFoundEx("Product not found"));
+        productRepository.deleteById(product.getId());
     }
 
     @Override

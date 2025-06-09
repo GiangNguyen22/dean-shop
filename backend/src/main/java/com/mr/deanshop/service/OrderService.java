@@ -1,9 +1,7 @@
 package com.mr.deanshop.service;
 
 import com.mr.deanshop.auth.entity.User;
-import com.mr.deanshop.dto.OrderItemRequest;
-import com.mr.deanshop.dto.OrderRequest;
-import com.mr.deanshop.dto.OrderResponse;
+import com.mr.deanshop.dto.*;
 import com.mr.deanshop.entity.*;
 import com.mr.deanshop.repository.OrderRepository;
 import com.stripe.model.PaymentIntent;
@@ -84,6 +82,7 @@ public class OrderService {
                 payment.setPaymentStatus(PaymentStatus.COMPLETED);
                 payment.setPaymentMethod(paymentIntent.getPaymentMethod());
                 order.setPaymentMethod(paymentIntent.getPaymentMethod());
+                order.setOrderStatus(OrderStatus.IN_PROGRESS);
                 order.setPayment(payment);
                 Order savedOrder = orderRepository.save(order);
                 Map<String,String> map = new HashMap<>();
@@ -97,5 +96,48 @@ public class OrderService {
         catch (Exception e){
             throw new IllegalArgumentException("PaymentIntent not found or missing metadata");
         }
+    }
+
+    public void cancelOrder(UUID id, Principal principal) {
+        User user = (User) userDetailsService.loadUserByUsername(principal.getName());
+        Order order = orderRepository.findById(id).orElse(null);
+        if(null != order && order.getUser().getId().equals(user.getId())){
+            order.setOrderStatus(OrderStatus.CANCELLED);
+            orderRepository.save(order);
+        }
+        else{
+            throw new RuntimeException("Invalid request");
+        }
+
+    }
+
+    private List<OrderItemDetail> getOrderItemDetails(List<OrderItem> orderItems){
+        return orderItems.stream().map(orderItem -> {
+            return OrderItemDetail.builder()
+                    .id(orderItem.getId())
+                    .itemPrice(orderItem.getItemPrice())
+                    .productVariantId(orderItem.getProductVariantId())
+                    .quantity(orderItem.getQuantity())
+                    .product(orderItem.getProduct())
+                    .build();
+        }).toList();
+    }
+
+    public List<OrderDetails> getOrderByUser(String name) {
+        User user = (User) userDetailsService.loadUserByUsername(name);
+        List<Order> orders = orderRepository.findOrderByUser(user);
+
+        return orders.stream().map(order -> {
+            return OrderDetails.builder()
+                    .id(order.getId())
+                    .orderDate(order.getOrderDate())
+                    .address(order.getAddress())
+                    .totalAmount(order.getTotalAmount())
+                    .orderStatus(order.getOrderStatus())
+                    .shipmentNumber(order.getShipmentTrackingNumber())
+                    .expectedDeliveryDate(order.getExpectedDeliveryDate())
+                    .orderItemList(getOrderItemDetails(order.getOrderItemList()))
+                    .build();
+        }).toList();
     }
 }

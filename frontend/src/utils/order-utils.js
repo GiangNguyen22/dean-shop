@@ -22,3 +22,10 @@ export const createOrderRequest = (cartItems, userId, addressId) => {
     request.currency = "usd";
     return request;
 }
+
+export const getStepCount = {
+    'PENDING':1,
+    'IN_PROGRESS':2,
+    'SHIPPED':3,
+    'DELIVERED':4
+}

@@ -2,6 +2,8 @@ package com.mr.deanshop.auth.service;
 
 import com.mr.deanshop.auth.dto.RegistrationRequest;
 import com.mr.deanshop.auth.dto.RegistrationResponse;
+import com.mr.deanshop.auth.dto.UserDetailDto;
+import com.mr.deanshop.auth.entity.Authority;
 import com.mr.deanshop.auth.entity.User;
 import com.mr.deanshop.auth.helper.VerificationCodeGenerator;
 import com.mr.deanshop.auth.repository.UserDetailRepository;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerErrorException;
+
+import java.util.List;
 
 @Service
 public class RegistrationService {
@@ -65,5 +69,15 @@ public class RegistrationService {
         User user = userDetailRepository.findByEmail(email);
         user.setEnabled(true);
         userDetailRepository.save(user);
+    }
+
+    public void updateRole( String email) {
+        User user = userDetailRepository.findByEmail(email);
+        List<Authority> authority =  authorityService.getUserAuthority();
+        Authority authority1 = authorityService.getAdminAuthority();
+        authority.add(authority1);
+        user.setAuthorities(authority);
+        userDetailRepository.save(user);
+
     }
 }

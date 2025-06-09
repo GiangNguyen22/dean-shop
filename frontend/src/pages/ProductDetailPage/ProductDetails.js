@@ -52,9 +52,9 @@ const ProductDetails = () => {
 
 
       useEffect(()=>{
-    getAllProducts(product?.categoryId,product?.categoryTypeId).then(res=>{
-      const excludedProduct = res?.filter((item)=> item?.id !== product?.id);
-      setSimilarProduct(excludedProduct);
+        getAllProducts(product?.categoryId,product?.categoryTypeId).then(res=>{
+        const excludedProduct = res?.filter((item)=> item?.id !== product?.id);
+        setSimilarProduct(excludedProduct);
     }).catch(()=>[
       
     ])

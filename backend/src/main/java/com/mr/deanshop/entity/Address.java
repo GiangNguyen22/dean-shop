@@ -24,7 +24,7 @@ public class Address {
     private String state;
     private String city;
     @Column(name = "zip_code")
-    private String zipcode;
+    private String zipCode;
     private String phone;
 
     @ManyToOne(fetch = FetchType.LAZY)

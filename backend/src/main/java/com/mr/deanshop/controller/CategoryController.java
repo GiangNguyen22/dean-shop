@@ -4,6 +4,7 @@ import com.mr.deanshop.dto.CategoryDto;
 import com.mr.deanshop.entity.Category;
 import com.mr.deanshop.repository.CategoryRepository;
 import com.mr.deanshop.service.CategoryService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +15,21 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/category")
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getCategoryById(@RequestParam(value = "id", required = true) UUID categoryId) {
+    public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id", required = true) UUID categoryId) {
             Category category = categoryService.getCategory(categoryId);
             return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<Category>> getAllCategories(HttpServletResponse response) {
         List<Category> categoryList = categoryService.getAllCategory();
+        response.setHeader("Content-Range",String.valueOf(categoryList.size()));
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
